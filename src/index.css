@@ -17,6 +17,7 @@ body {
 
 form {
   width: 100%;
+  position: fixed;
 }
 
 button {
@@ -31,8 +32,7 @@ button.selected {
 }
 
 ul {
-  margin-top: 1rem;
-  padding: 0 2rem 1rem;
+  padding: 3rem 2rem 1rem;
 }
 
 li {
