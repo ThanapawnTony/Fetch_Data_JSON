@@ -1,23 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import Form from './Form';
+import './index.css';
+import List from './List';
 
 function App() {
+
+  const API_URL = 'https://jsonplaceholder.typicode.com/';
+
+  const [items, setItems] = useState([]);
+  const [reqType, setReqType] = useState('users');
+
+    useEffect(() => {
+      // using useEffect to fetch items into the server
+      const fetchItems = async () => {
+        try {
+          const response = await fetch(`${API_URL}${reqType}`);
+          if (!response.ok) throw Error('Did not recieved expected data');
+          const data = await response.json();
+          console.log(data);
+          setItems(data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      fetchItems();
+    }, [reqType])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Form reqType={reqType} setReqType={setReqType} />
+      <List items={items} />
     </div>
   );
 }
